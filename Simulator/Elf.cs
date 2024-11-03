@@ -9,23 +9,26 @@ public class Elf : Creature
     public int Agility
     {
         get => _agility;
-        set
-        {
-            if (_agility != 1)
-                return;
+        set => _agility = Validator.Limiter(value, 0, 10);
+        //set
+        //{
+        //    if (_agility != 1)
+        //        return;
 
-            if (value < 1)
-                value = 1;
-            else if (value > 10)
-                value = 10;
+        //    if (value < 1)
+        //        value = 1;
+        //    else if (value > 10)
+        //        value = 10;
 
-            _agility = value;
-        }
+        //    _agility = value;
+        //}
     }
 
     //public void Sing() => Console.WriteLine($"{Name} is singing.");
 
     public override int Power => 8 * Level + 2 * Agility;
+
+    public override string Info => $"{Name} [{Level}][{Agility}]";
 
     int singCount = 0;
 

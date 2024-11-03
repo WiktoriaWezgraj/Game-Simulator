@@ -5,26 +5,29 @@ namespace Simulator;
 public class Orc : Creature
 {
     
-    private int _rage = 0;
+    public int _rage = 0;
     public int Rage
     {
         get => _rage;
-        set
-        {
-            if (_rage != 1)
-                return;
+        set => _rage = Validator.Limiter(value, 0, 10);
+        //set
+        //{
+        //    if (_rage != 1)
+        //        return;
 
-            if (value < 1)
-                value = 1;
-            else if (value > 10)
-                value = 10;
+        //    if (value < 1)
+        //        value = 1;
+        //    else if (value > 10)
+        //        value = 10;
 
-            _rage = value;
-        }
+        //    _rage = value;
+        //}
     }
     //public void Hunt() => Console.WriteLine($"{Name} is hunting.");
 
     public override int Power => 7 * Level + 3 * Rage;
+
+    public override string Info => $"{Name} [{Level}][{Rage}]";
 
     private int huntCount = 0;
 

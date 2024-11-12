@@ -5,64 +5,43 @@ namespace Simulator;
 
 internal class Program
 {
-
-    //static void Lab4a()
-    //{
-    //    Console.WriteLine("HUNT TEST\n");
-    //    var o = new Orc() { Name = "Gorbag", Rage = 7 };
-    //    o.SayHi();
-    //    for (int i = 0; i < 10; i++)
-    //    {
-    //        o.Hunt();
-    //        o.SayHi();
-    //    }
-
-    //    Console.WriteLine("\nSING TEST\n");
-    //    var e = new Elf("Legolas", agility: 2);
-    //    e.SayHi();
-    //    for (int i = 0; i < 10; i++)
-    //    {
-    //        e.Sing();
-    //        e.SayHi();
-    //    }
-
-    //    Console.WriteLine("\nPOWER TEST\n");
-    //    Creature[] creatures = {
-    //    o,
-    //    e,
-    //    new Orc("Morgash", 3, 8),
-    //    new Elf("Elandor", 5, 3)
-    //};
-    //    foreach (Creature creature in creatures)
-    //    {
-    //        Console.WriteLine($"{creature.Name,-15}: {creature.Power}");
-    //    }
-
-    static void Lab4b()
+    static void Lab5a()
     {
-        object[] myObjects = {
-        new Animals() { Description = "dogs"},
-        new Birds { Description = "  eagles ", Size = 10 },
-        new Elf("e", 15, -3),
-        new Orc("morgash", 6, 4)
-    };
-        Console.WriteLine("\nMy objects:");
-        foreach (var o in myObjects) Console.WriteLine(o);
-        /*
-            My objects:
-            ANIMALS: Dogs <3>
-            BIRDS: Eagles (fly+) <10>
-            ELF: E## [10][0]
-            ORC: Morgash [6][4]
-        */
+        Console.WriteLine("Starting Simulator!\n");
+
+        Point p = new(10, 25);
+        Console.WriteLine(p.Next(Direction.Right));
+        Console.WriteLine(p.NextDiagonal(Direction.Right));
+
+        var rectangle = new Rectangle(new Point(1, 2), new Point(4, 3));
+        Console.WriteLine(rectangle.ToString());
+
+        var rectangle1 = new Rectangle(new Point(-1, 3), new Point(1, -3));
+        Console.WriteLine(rectangle1.ToString());
+
+        Rectangle r = new(1, 2, 3, 4);
+
+        //var rectangle2;
+        try
+        {
+            var rectangle2 = new Rectangle(new Point(-1, 1), new Point(-1, 1));
+            Console.WriteLine(rectangle2.ToString());
+        }
+        catch (ArgumentException exc) { 
+            Console.WriteLine(exc.Message);
+        }
+
+        //var rectangle3 = new Rectangle(new Point(-1, 1), new Point(-1, 1));
+        //Console.WriteLine(rectangle3.ToString());
+        Console.WriteLine(rectangle1.Contains(new Point(1, 2)));
+
     }
 
     static void Main(string[] args)
     {
-        Console.WriteLine("Starting Simulator!\n");
+        Lab5a();
 
-        Lab4b();
-        Console.ReadLine();
+
     }
 }
 

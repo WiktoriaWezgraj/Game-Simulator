@@ -53,10 +53,12 @@ public class Elf : Creature
             singCount = 0;
         }
 
-        Console.WriteLine($"{Name} is singing.");
+        //Console.WriteLine($"{Name} is singing.");
     }
 
-    public override void SayHi() => Console.WriteLine(
-    $"Hi, I'm {Name}, my level is {Level}, my agility is {Agility}.");
+    public override string Greeting()
+    {
+        return $"Hi, I'm {Name}, my level is {Level}, my agility is {Agility}.";
+    }
 
 }

@@ -71,8 +71,6 @@ public abstract class Creature
 
     //public string Info => $"{Name} <{Level}>";
 
-    public abstract void SayHi();
-
     public override string ToString() => $"{GetType().Name.ToUpper()}: {Info}";
 
     public void Upgrade()
@@ -80,25 +78,35 @@ public abstract class Creature
         if (_level < 10)
             _level++;
     }
-    public void Go(Direction direction)
-    {
-        string directionLower = direction.ToString().ToLower(); 
-        Console.WriteLine($"{_name} goes {directionLower}");
-    }
 
-    public void Go(Direction[] directions) 
-                                           
+    string Go(Direction direction) => $"{direction.ToString().ToLower()}";
+    //public void Go(Direction direction)
+    //{
+    //    string directionLower = direction.ToString().ToLower(); 
+    //    Console.WriteLine($"{_name} goes {directionLower}");
+    //}
+
+    public string[] Go(Direction[] directions)
     {
-        foreach (Direction direction in directions) 
+        List<string> list = new List<string>();
+        foreach (var direction in directions)
         {
-            Go(direction);
+            list.Add(Go(direction));
         }
+
+        return list.ToArray();
     }
 
-    public void Go(string letters)
+    public string[] Go(string directionArguments)
     {
-        Direction[] parsedDirections = DirectionParser.Parse(letters);
-        Go(parsedDirections);
+        List<string> list = new List<string>();
+        foreach (var direction in DirectionParser.Parse(directionArguments))
+        {
+            list.Add(Go(direction));
+        }
+
+        return list.ToArray();
     }
+    public abstract string Greeting();
 }
 

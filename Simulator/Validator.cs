@@ -11,6 +11,7 @@ public static class Validator
 
     public static string Shortener(string value, int min, int max, char placeholder)
     {
+        value ??= string.Empty;
 
         value = value.Trim();
 
@@ -24,16 +25,12 @@ public static class Validator
                 value = value.PadRight(min, placeholder);
         }
 
-        value = value[0].ToString().ToUpper() + value[1..];
-
-        if (string.IsNullOrEmpty(value))
-            return new string(placeholder, min); // returns placeholder if empty
-
-
-        
-
+        if (value.Length > 0)
+            value = value[0].ToString().ToUpper() + value[1..];
+        else
+            return new string(placeholder, min); 
 
         return value;
-
     }
 }
+

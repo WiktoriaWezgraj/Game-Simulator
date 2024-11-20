@@ -6,24 +6,9 @@ using System.Threading.Tasks;
 
 namespace Simulator.Maps;
 
-public class SmallTorusMap : Map
+public class SmallTorusMap : SmallMap
 {
-    public int Size { get; }
-
-    public SmallTorusMap(int size)
-    {
-        Size = size;
-        //this.Size = size;
-        if ( size < 5 || size > 20 )
-        {
-            throw new ArgumentOutOfRangeException("Zły rozmiar");
-        }      
-    }
-
-    public override bool Exist(Point p)
-    {
-        return p.X >= 0 && p.X <= Size-1 && p.Y >= 0 && p.Y <= Size-1;
-    }
+    public SmallTorusMap(int sizeX, int sizeY) : base(sizeX, sizeY) { }
 
     public override Point Next(Point p, Direction d)
     {
@@ -33,16 +18,16 @@ public class SmallTorusMap : Map
         switch(d)
         {
             case Direction.Up:
-                y = (y + 1) % Size;
+                y = (y + 1) % SizeY;
                     break;
             case Direction.Down:
-                y = (y - 1 + Size) % Size;
+                y = (y - 1 + SizeY) % SizeY;
                 break;
             case Direction.Left:
-                x = (x - 1 + Size) % Size;
+                x = (x - 1 + SizeX) % SizeX;
                 break;
             case Direction.Right:
-                x = (x + 1) % Size;
+                x = (x + 1) % SizeX;
                 break;
         }
         return new Point(x, y);
@@ -56,20 +41,20 @@ public class SmallTorusMap : Map
         switch (d)
         {
             case Direction.Up:
-                x = (x + 1) % Size;
-                y = (y + 1) % Size;
+                x = (x + 1) % SizeX;
+                y = (y + 1) % SizeY;
                 break;
             case Direction.Down:
-                x = (x - 1 + Size) % Size;
-                y = (y - 1 + Size) % Size;
+                x = (x - 1 + SizeX) % SizeX;
+                y = (y - 1 + SizeY) % SizeY;
                 break;
             case Direction.Left:
-                x = (x - 1 + Size) % Size;
-                y = (y + 1) % Size;
+                x = (x - 1 + SizeX) % SizeX;
+                y = (y + 1) % SizeY;
                 break;
             case Direction.Right:
-                x = (x + 1) % Size;
-                y = (y - 1 + Size) % Size;
+                x = (x + 1) % SizeX;
+                y = (y - 1 + SizeY) % SizeY;
                 break;
         }
         return new Point(x, y);

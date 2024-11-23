@@ -53,10 +53,10 @@ public class Orc : Creature
         }
         //Console.WriteLine($"{Name} is hunting");
     }
-    public override string Greeting()
-    {
-        return $"Hi, I'm {Name}, my level is {Level}, my rage is {Rage}.";
-    }
+    //public override string Greeting()
+    //{
+    //    return $"Hi, I'm {Name}, my level is {Level}, my rage is {Rage}.";
+    //}
 }
 
     

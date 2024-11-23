@@ -26,6 +26,7 @@ public class ValidatorTests
     }
 
     [Theory]
+    [InlineData("a    b", 3, 5, '#', "A##")]
     [InlineData("TestName", 3, 10, '#', "TestName")]       
     [InlineData("my example", 5, 7, '#', "My exam")]           
     [InlineData("  space test ", 4, 8, '*', "Space te")]   

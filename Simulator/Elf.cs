@@ -56,9 +56,9 @@ public class Elf : Creature
         //Console.WriteLine($"{Name} is singing.");
     }
 
-    public override string Greeting()
-    {
-        return $"Hi, I'm {Name}, my level is {Level}, my agility is {Agility}.";
-    }
+    //public override string Greeting()
+    //{
+    //    return $"Hi, I'm {Name}, my level is {Level}, my agility is {Agility}.";
+    //}
 
 }

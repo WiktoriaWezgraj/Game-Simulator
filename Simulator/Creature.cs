@@ -1,9 +1,27 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+using Simulator.Maps;
 namespace Simulator;
 
 public abstract class Creature
 {
+
+    public Map? Map { get; private set; }
+    public Point Position { get; private set; }
+
+    public void InitMapAndPosition(Map map, Point position)
+    {
+        if (map == null)
+            throw new ArgumentNullException(nameof(map));
+        if (!map.Exist(position))
+            throw new ArgumentException("Position is out of map bounds.");
+
+        Map = map;
+        Position = position;
+        map.Add(this, position);
+    }
+
+
     private string _name = "Unknown";
     private int _level = 1;
     public string Name
@@ -12,49 +30,14 @@ public abstract class Creature
         set
         {
             _name = Validator.Shortener(value, 3, 25, '#');
-            //if (char.IsLower(value[0]))
-            //    value = char.ToUpper(value[0]) + value.Substring(1);
+
         }
     }
-            //set
-            //{
-            //    if (_name != "Unknown") //Sprawdzenie czy wartość została już nadana przy inicjacji, jeśli tak to funkcja wraca pusta, co nie pozwala na kolejną zmianę
-            //        return;
 
-            //    value = value.Trim();
-
-            //    if (value.Length < 3)
-            //        value = value.PadRight(3, '#');
-
-            //    if (value.Length > 25)
-            //    {
-            //        value = value.Substring(0, 25).TrimEnd();
-            //        if (value.Length < 3)
-            //            value = value.PadRight(3, '#');
-            //    }
-
-            //    if (char.IsLower(value[0]))
-            //        value = char.ToUpper(value[0]) + value.Substring(1);
-
-            //    _name = value;
-            //}
-     
     public int Level
     {
         get => _level;
         set => _level = Validator.Limiter(value, 1, 10);
-        //set
-        //{
-        //    if (_level != 1) 
-        //        return;
-
-        //    if (value < 1)
-        //        value = 1;
-        //    else if (value > 10)
-        //        value = 10;
-
-        //    _level = value;
-        //}
     }
 
     public abstract string Info { get; }
@@ -69,7 +52,6 @@ public abstract class Creature
 
     public Creature() { }
 
-    //public string Info => $"{Name} <{Level}>";
 
     public override string ToString() => $"{GetType().Name.ToUpper()}: {Info}";
 
@@ -79,34 +61,20 @@ public abstract class Creature
             _level++;
     }
 
-    string Go(Direction direction) => $"{direction.ToString().ToLower()}";
-    //public void Go(Direction direction)
-    //{
-    //    string directionLower = direction.ToString().ToLower(); 
-    //    Console.WriteLine($"{_name} goes {directionLower}");
-    //}
-
-    public string[] Go(Direction[] directions)
+    public string Go(Direction direction)
     {
-        List<string> list = new List<string>();
-        foreach (var direction in directions)
+        if (Map == null)
+            return "The creature is not assigned to a map.";
+
+        Point nextPosition = Map.Next(Position, direction);
+
+        if (!nextPosition.Equals(Position))
         {
-            list.Add(Go(direction));
+            Map.Move(this, Position, nextPosition);
+            Position = nextPosition;
         }
 
-        return list.ToArray();
+        return $"Moved {direction.ToString().ToLower()} to {Position}.";
     }
-
-    public string[] Go(string directionArguments)
-    {
-        List<string> list = new List<string>();
-        foreach (var direction in DirectionParser.Parse(directionArguments))
-        {
-            list.Add(Go(direction));
-        }
-
-        return list.ToArray();
-    }
-    public abstract string Greeting();
 }
 

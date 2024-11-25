@@ -52,7 +52,6 @@ public abstract class Creature
 
     public Creature() { }
 
-
     public override string ToString() => $"{GetType().Name.ToUpper()}: {Info}";
 
     public void Upgrade()

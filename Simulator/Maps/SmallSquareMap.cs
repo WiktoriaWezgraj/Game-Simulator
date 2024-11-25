@@ -1,48 +1,55 @@
 ﻿using System.Drawing;
 
-namespace Simulator.Maps;
-
-public class SmallSquareMap : SmallMap 
+namespace Simulator.Maps
 {
-    public SmallSquareMap(int size) : base(size, size) { }
+    public class SmallSquareMap : SmallMap
+    {
+        public SmallSquareMap(int size) : base(size, size) { }
 
-    public override void Add(Creature creature, Point position)
-    {
-        base.Add(creature, position);
-    }
-    public override void Remove(Creature creature, Point position)
-    {
-        base.Remove(creature, position);
-    }
-    public override void Move(Creature creature, Point position, Point position2)
-    {
-        base.Move(creature, position, position2);
-    }
-    public override void At(Point position)
-    {
-        base.At(position);
-    }
-
-    public override void At(int x, int y)
-    {
-        base.At(x, y);
-    }
-
-    public override Point Next(Point p, Direction d)
-    {
-        if(Exist(p.Next(d)))
+        public override void Add(Creature creature, Point position)
         {
-            return p.Next(d);
+            base.Add(creature, position);
         }
-        return p;
-        
-    }
-    public override Point NextDiagonal(Point p, Direction d)
-    {
-        if (Exist(p.NextDiagonal(d)))
+
+        public override void Remove(Creature creature, Point position)
         {
-            return p.NextDiagonal(d);
+            base.Remove(creature, position);
         }
-        return p;
+
+        public override void Move(Creature creature, Point from, Point to)
+        {
+            base.Move(creature, from, to);
+        }
+
+        public override List<Creature> At(Point position)
+        {
+            return base.At(position);
+        }
+
+        public override List<Creature> At(int x, int y)
+        {
+            return base.At(x, y);
+        }
+
+        public override bool Exist(Point p)
+        {
+            return p.X >= 0 && p.Y >= 0 && p.X < SizeX && p.Y < SizeY;
+        }
+
+        public override Point Next(Point p, Direction d)
+        {
+            if (Exist(p.Next(d))) return p.Next(d);
+            return p;
+        }
+
+        public override Point NextDiagonal(Point p, Direction d)
+        {
+            var nextDiagonalPoint = p.NextDiagonal(d);
+            if (Exist(nextDiagonalPoint))
+            {
+                return nextDiagonalPoint;
+            }
+            return p;
+        }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,26 +32,25 @@ public abstract class SmallMap : Map
         {
             throw new NotImplementedException();
         }
-        _fields[position.X, position.Y] ??= new List<Creature>();
-        _fields[position.X, position.Y]!.Add(creature);
+        _fields[position.X, position.Y].Add(creature);
 
     }
     public override void Remove(Creature creature, Point position)
     {
-        _fields[position.X, position.Y]!.Remove(creature);
+        _fields[position.X, position.Y].Remove(creature);
     }
     public override void Move(Creature creature, Point from, Point to)
     {
-        Remove(creature, from);
-        Add(creature, to);
+        _fields[from.X, to.Y].Remove(creature);
+        _fields[from.X, to.Y].Add(creature);
     }
-    public override void At(Point position)
+    public override List<Creature> At(int x, int y)
     {
-        new Point(position.X, position.Y);
+        return _fields[x, y];
     }
-    public override void At(int x, int y)
+    public override List<Creature> At(Point point)
     {
-        new Point(x, y);
+        return _fields[point.X, point.Y];
     }
 
 

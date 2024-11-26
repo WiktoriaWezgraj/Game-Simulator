@@ -21,12 +21,12 @@ namespace Simulator.Maps
             base.Move(creature, from, to);
         }
 
-        public override List<Creature> At(Point position)
+        public override List<Creature>? At(Point position)
         {
             return base.At(position);
         }
 
-        public override List<Creature> At(int x, int y)
+        public override List<Creature>? At(int x, int y)
         {
             return base.At(x, y);
         }

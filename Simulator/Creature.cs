@@ -8,36 +8,21 @@ public abstract class Creature
 
     public Map? Map { get; private set; }
     public Point Position { get; private set; }
-
-    public void InitMapAndPosition(Map map, Point position)
-    {
-        if (map == null)
-            throw new ArgumentNullException(nameof(map));
-        if (!map.Exist(position))
-            throw new ArgumentException("Position is out of map bounds.");
-
-        Map = map;
-        Position = position;
-        map.Add(this, position);
-    }
-
-
     private string _name = "Unknown";
     private int _level = 1;
     public string Name
     {
         get => _name;
-        set
+        init
         {
             _name = Validator.Shortener(value, 3, 25, '#');
-
         }
     }
 
     public int Level
     {
         get => _level;
-        set => _level = Validator.Limiter(value, 1, 10);
+        init => _level = Validator.Limiter(value, 1, 10);
     }
 
     public abstract string Info { get; }
@@ -60,10 +45,24 @@ public abstract class Creature
             _level++;
     }
 
+    public abstract string Greeting();
+
+    public void InitMapAndPosition(Map map, Point position)
+    {
+        if (map == null)
+            throw new ArgumentNullException(nameof(map));
+        if (!map.Exist(position))
+            throw new ArgumentException("Position is out of map bounds.");
+
+        Map = map;
+        Position = position;
+        map.Add(this, position);
+    }
+
     public string Go(Direction direction)
     {
         if (Map == null)
-            return "The creature is not assigned to a map.";
+            throw new InvalidOperationException("The creature is not assigned to a map.");
 
         Point nextPosition = Map.Next(Position, direction);
 

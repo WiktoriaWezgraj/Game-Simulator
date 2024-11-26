@@ -8,7 +8,7 @@ public class Animals
     public required string Description
     {
         get => _description;
-        set
+        init
         {
             _description = Validator.Shortener(value, 3, 15, '#');
            

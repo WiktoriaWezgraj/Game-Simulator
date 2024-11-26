@@ -10,8 +10,8 @@ public abstract class Map
     public abstract void Add(Creature creature, Point position);
     public abstract void Remove(Creature creature, Point position);
     public abstract void Move(Creature creature, Point position, Point position2);
-    public abstract List<Creature> At(int x, int y);
-    public abstract List<Creature> At(Point point);
+    public abstract List<Creature>? At(int x, int y);
+    public abstract List<Creature>? At(Point point);
 
     private readonly Rectangle _map;
 

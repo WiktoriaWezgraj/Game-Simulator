@@ -3,27 +3,13 @@
 namespace Simulator;
 
 public class Orc : Creature
-{
-    
+{   
     public int _rage = 0;
     public int Rage
     {
         get => _rage;
-        set => _rage = Validator.Limiter(value, 0, 10);
-        //set
-        //{
-        //    if (_rage != 1)
-        //        return;
-
-        //    if (value < 1)
-        //        value = 1;
-        //    else if (value > 10)
-        //        value = 10;
-
-        //    _rage = value;
-        //}
+        init => _rage = Validator.Limiter(value, 0, 10);
     }
-    //public void Hunt() => Console.WriteLine($"{Name} is hunting.");
 
     public override int Power => 7 * Level + 3 * Rage;
 
@@ -33,14 +19,12 @@ public class Orc : Creature
 
     public Orc() : base() { }
 
-    public Orc(string name, int level, int rage = 1)
+    public Orc(string name, int level = 1, int rage = 1)
         : base(name, level)
     {
         Rage = rage;
         huntCount = 0;
     }
-
-   
 
     public void Hunt()
     {
@@ -51,12 +35,8 @@ public class Orc : Creature
             _rage++;
             huntCount = 0;
         }
-        //Console.WriteLine($"{Name} is hunting");
     }
-    //public override string Greeting()
-    //{
-    //    return $"Hi, I'm {Name}, my level is {Level}, my rage is {Rage}.";
-    //}
+    public override string Greeting() => $"Hi, I'm {Name}, my level is {Level}, my rage is {Rage}.";
 }
 
     

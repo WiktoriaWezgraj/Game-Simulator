@@ -28,32 +28,30 @@ public abstract class SmallMap : Map
     //add, remove, at ...
     public override void Add(Creature creature, Point position)
     {
-        if (!Exist(position))
-        {
-            throw new NotImplementedException();
-        }
-        _fields[position.X, position.Y].Add(creature);
+        _fields[position.X, position.Y] ??= new List<Creature>();
 
-    }
-    public override void Remove(Creature creature, Point position)
-    {
-        _fields[position.X, position.Y].Remove(creature);
+        _fields[position.X, position.Y]?.Add(creature);
     }
     public override void Move(Creature creature, Point from, Point to)
     {
-        _fields[from.X, to.Y].Remove(creature);
-        _fields[from.X, to.Y].Add(creature);
+        {
+            if (!Exist(from) || !Exist(to)) throw new ArgumentException("Position is out of map!");
+            Remove(creature, from);
+            Add(creature, to);
+        }
     }
-    public override List<Creature> At(int x, int y)
+    public override void Remove(Creature creature, Point position)
     {
-        return _fields[x, y];
+        _fields[position.X, position.Y]?.Remove(creature);
+
+        if (_fields[position.X, position.Y]?.Count == 0)
+            _fields[position.X, position.Y] = null;
     }
-    public override List<Creature> At(Point point)
+    public override List<Creature>? At(int x, int y) => At(new Point(x, y));
+    public override List<Creature>? At(Point point)
     {
         return _fields[point.X, point.Y];
     }
-
-
 }
 // dodajemy public readonly Finished, currentcreature {get ;} ktory stwor sie bedzie ruszal i nazwa ruchu,
 // turn - bierzemy stwora bierzemy ruch i mowimy stworowi zeby wykonal ten ruch

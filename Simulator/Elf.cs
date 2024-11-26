@@ -4,34 +4,17 @@ namespace Simulator;
 
 public class Elf : Creature
 {
-
     public int _agility = 0;
     public int Agility
     {
         get => _agility;
-        set => _agility = Validator.Limiter(value, 0, 10);
-        //set
-        //{
-        //    if (_agility != 1)
-        //        return;
-
-        //    if (value < 1)
-        //        value = 1;
-        //    else if (value > 10)
-        //        value = 10;
-
-        //    _agility = value;
-        //}
+        init => _agility = Validator.Limiter(value, 0, 10);
     }
-
-    //public void Sing() => Console.WriteLine($"{Name} is singing.");
-
     public override int Power => 8 * Level + 2 * Agility;
 
     public override string Info => $"{Name} [{Level}][{Agility}]";
 
-    int singCount = 0;
-
+    private int singCount = 0;
 
     public Elf() : base() { }
 
@@ -41,10 +24,8 @@ public class Elf : Creature
         Agility = agility;
     }
 
-
     public void Sing()
     {
-
         singCount++;
 
         if (singCount % 3 == 0 && _agility < 10)
@@ -52,13 +33,8 @@ public class Elf : Creature
             _agility++;
             singCount = 0;
         }
-
-        //Console.WriteLine($"{Name} is singing.");
     }
 
-    //public override string Greeting()
-    //{
-    //    return $"Hi, I'm {Name}, my level is {Level}, my agility is {Agility}.";
-    //}
+    public override string Greeting() => $"Hi, I'm {Name}, my level is {Level}, my agility is {Agility}.";
 
 }

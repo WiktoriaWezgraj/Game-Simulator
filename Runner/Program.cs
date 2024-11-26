@@ -1,14 +1,18 @@
 ﻿using Simulator.Maps;
-using System.ComponentModel;
-using System.Security.Cryptography.X509Certificates;
+using System;
+using System.Diagnostics;
+using System.Runtime.Intrinsics;
+using System.Text;
 
 namespace Simulator;
 
-internal class Program
+public class Program
 {
     static void Main(string[] args)
     {
+
         Console.WriteLine("Starting Simulator!\n");
+
     }
 }
 

@@ -13,7 +13,7 @@ internal class Program
         //SmallSquareMap map = new(9);
         SmallSquareMap map = new(5);
 
-        List<Creature> creatures = [new Orc("Gorbag"), new Elf("Elandor")];
+        List<IMappable> creatures = [new Orc("Gorbag"), new Elf("Elandor")];
         //List<Creature> creatures = [new Orc("Mańkus"), new Elf("Marcus"), new Orc("Shrekus")];
 
         List<Point> points = [new(2, 2), new(3, 1)];
@@ -33,8 +33,8 @@ internal class Program
         Console.ReadLine();
         while (!simulation.Finished)
         {
-            Console.WriteLine($"<{simulation.CurrentCreature.GetType().Name} - {simulation.CurrentCreature.Info}> " +
-                $"from {simulation.CurrentCreature.Position} goes {simulation.CurrentMoveName}");
+            Console.WriteLine($"<{simulation.CurrentMappable.GetType().Name} - {simulation.CurrentMappable.Info}> " +
+                $"from {simulation.CurrentMappable.Position} goes {simulation.CurrentMoveName}");
             simulation.Turn();
             mapVisualizer.Draw();
             Console.WriteLine("Press any key to continue...");

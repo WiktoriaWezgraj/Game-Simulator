@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Simulator.Maps;
+﻿namespace Simulator.Maps;
 
 public abstract class SmallMap : Map
 {
-    List<Creature>?[,] _fields;
+    private readonly List<IMappable>?[,] _fields;
 
     protected SmallMap(int sizeX, int sizeY) : base(sizeX, sizeY)
     {
@@ -22,37 +14,37 @@ public abstract class SmallMap : Map
         {
             throw new ArgumentOutOfRangeException(nameof(sizeY), "Too tall");
         }
-        _fields = new List<Creature>?[sizeX, sizeY];
+        _fields = new List<IMappable>?[sizeX, sizeY];
     }
 
     //add, remove, at ...
-    public override void Add(Creature creature, Point position)
+    public override void Add(IMappable mappable, Point position)
     {
-        _fields[position.X, position.Y] ??= new List<Creature>();
+        _fields[position.X, position.Y] ??= new List<IMappable>();
 
-        _fields[position.X, position.Y]?.Add(creature);
+        _fields[position.X, position.Y]?.Add(mappable);
     }
-    public override void Move(Creature creature, Point from, Point to)
+    public override void Move(IMappable mappable, Point from, Point to)
     {
         {
             if (!Exist(from) || !Exist(to)) throw new ArgumentException("Position is out of map!");
-            Remove(creature, from);
-            Add(creature, to);
+            Remove(mappable, from);
+            Add(mappable, to);
         }
     }
-    public override void Remove(Creature creature, Point position)
+    public override void Remove(IMappable mappable, Point position)
     {
-        _fields[position.X, position.Y]?.Remove(creature);
+        _fields[position.X, position.Y]?.Remove(mappable);
 
         if (_fields[position.X, position.Y]?.Count == 0)
             _fields[position.X, position.Y] = null;
     }
-    public override List<Creature>? At(int x, int y) => At(new Point(x, y));
-    public override List<Creature>? At(Point point)
+    public override List<IMappable>? At(int x, int y) => At(new Point(x, y));
+    public override List<IMappable>? At(Point point)
     {
         return _fields[point.X, point.Y];
     }
 }
-// dodajemy public readonly Finished, currentcreature {get ;} ktory stwor sie bedzie ruszal i nazwa ruchu,
+// dodajemy public readonly Finished, currentmappable {get ;} ktory stwor sie bedzie ruszal i nazwa ruchu,
 // turn - bierzemy stwora bierzemy ruch i mowimy stworowi zeby wykonal ten ruch
 //na konsoli symulacja jak to dziala - klasa mapvisualizer po kazdym ruchu rysujemy mape zwierzaczków

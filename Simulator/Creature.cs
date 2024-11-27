@@ -3,7 +3,7 @@
 using Simulator.Maps;
 namespace Simulator;
 
-public abstract class Creature
+public abstract class Creature : IMappable
 {
 
     public Map? Map { get; private set; }
@@ -59,7 +59,7 @@ public abstract class Creature
         map.Add(this, position);
     }
 
-    public string Go(Direction direction)
+    public void Go(Direction direction)
     {
         if (Map == null)
             throw new InvalidOperationException("The creature is not assigned to a map.");
@@ -72,7 +72,7 @@ public abstract class Creature
             Position = nextPosition;
         }
 
-        return $"Moved {direction.ToString().ToLower()} to {Position}.";
+        Console.WriteLine($"Moved {direction.ToString().ToLower()} to {Position}.");
     }
 }
 

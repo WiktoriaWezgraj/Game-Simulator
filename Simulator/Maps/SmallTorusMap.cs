@@ -8,31 +8,6 @@ namespace Simulator.Maps
     {
         public SmallTorusMap(int sizeX, int sizeY) : base(sizeX, sizeY) { }
 
-        public override void Add(Creature creature, Point position)
-        {
-            base.Add(creature, position);
-        }
-
-        public override void Remove(Creature creature, Point position)
-        {
-            base.Remove(creature, position);
-        }
-
-        public override void Move(Creature creature, Point from, Point to)
-        {
-            base.Move(creature, from, to);
-        }
-
-        public override List<Creature>? At(Point position)
-        {
-            return base.At(position);
-        }
-
-        public override List<Creature>? At(int x, int y)
-        {
-            return base.At(x, y);
-        }
-
         public override bool Exist(Point p)
         {
             return p.X >= 0 && p.Y >= 0 && p.X < SizeX && p.Y < SizeY;

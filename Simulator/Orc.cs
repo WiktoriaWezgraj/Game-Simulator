@@ -3,7 +3,8 @@
 namespace Simulator;
 
 public class Orc : Creature
-{   
+{
+    public override char Symbol => 'O';
     public int _rage = 0;
     public int Rage
     {

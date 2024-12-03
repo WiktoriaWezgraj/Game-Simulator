@@ -11,13 +11,25 @@ internal class Program
         Console.OutputEncoding = Encoding.UTF8;
 
         //SmallSquareMap map = new(9);
-        SmallSquareMap map = new(5);
+        SmallSquareMap map = new(6);
 
-        List<IMappable> creatures = [new Orc("Gorbag"), new Elf("Elandor")];
-        //List<Creature> creatures = [new Orc("Mańkus"), new Elf("Marcus"), new Orc("Shrekus")];
+        List<IMappable> creatures = new()
+        {
+            new Elf("Elandor"),
+            new Orc("Gorbag"),
+            new Animals { Description = "Rabbits", Size = 2 },
+            new Birds { Description = "Ostriches", Size = 1, CanFly = true },
+            new Birds { Description = "Eagles", Size = 1, CanFly = false },
+        };
 
-        List<Point> points = [new(2, 2), new(3, 1)];
-        //List<Point> points = [new(2, 4), new(3, 8), new(4, 4)];
+        List<Point> points = new()
+        {
+            new Point(1, 2),
+            new Point(4, 5),
+            new Point(3, 1),
+            new Point(4, 4),
+            new Point(0, 0)
+        };
 
         //string moves = "dlrludl";
         string moves = "rrddlluu";

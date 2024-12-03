@@ -45,6 +45,8 @@ public abstract class Creature : IMappable
             _level++;
     }
 
+    public virtual char Symbol => 'C';
+
     public abstract string Greeting();
 
     public void InitMapAndPosition(Map map, Point position)

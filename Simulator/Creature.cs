@@ -75,17 +75,4 @@ public abstract class Creature : IMappable
         Console.WriteLine($"Moved {direction.ToString().ToLower()} to {Position}.");
     }
 
-    // Implementacja metody SetPosition z interfejsu IMappable
-    public void SetPosition(Point position)
-    {
-        if (Map == null)
-            throw new InvalidOperationException("The creature is not assigned to a map.");
-
-        if (!Map.Exist(position))
-            throw new ArgumentException("The specified position is out of the map bounds.");
-
-        Position = position;
-    }
-}
-
 

@@ -20,7 +20,6 @@ public readonly struct Point
             Direction.Right => new Point(X + 1, Y),
             _ => this
         };
-        //return default;
     }
 
     public Point NextDiagonal(Direction direction)
@@ -33,7 +32,6 @@ public readonly struct Point
             Direction.Right => new Point(X + 1, Y - 1),
             _ => this
         };
-        //return default;
     }
 }
 

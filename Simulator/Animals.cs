@@ -15,7 +15,7 @@ public class Animals : IMappable
            
         }
     }
-
+    
     public Point Position { get; protected set; } 
     public virtual char Symbol => 'A';
     public Map? Map { get; private set; }

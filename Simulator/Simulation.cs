@@ -64,7 +64,7 @@ public class Simulation
         }
     }
 
-    private HashSet<char> validMove = new HashSet<char> { 'l', 'r', 'u', 'd' };
+    private HashSet<char> validMove = new HashSet<char> { 'l', 'r', 'u', 'd', 'n', 'e', 's', 'w' };
     private string ValidateMoves(string moves) => new(moves.Where(c => validMove.Contains(Char.ToLower(c))).ToArray());
 
     /// <summary>
@@ -99,6 +99,8 @@ public class Simulation
     /// </summary>
     public void Turn()
     {
+
+
         if (Finished)
         {
             throw new InvalidOperationException("Simulation is already finished.");

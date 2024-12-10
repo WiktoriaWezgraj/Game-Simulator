@@ -39,6 +39,8 @@ public class Simulation
     /// </summary>
     public bool Finished = false;
 
+    public SimulationHistory History { get; }
+
     /// <summary>
     /// IMappable which will be moving current turn.
     /// </summary>
@@ -58,13 +60,13 @@ public class Simulation
         get
         {
             var direction = DirectionParser.Parse(Moves[currentMappableIndex % Moves.Length].ToString());
-            if (direction.Any()) return direction[0].ToString().ToLower(); //podobno slabe
+            if (direction.Any()) return direction[0].ToString().ToLower(); 
 
             return string.Empty;
         }
     }
 
-    private HashSet<char> validMove = new HashSet<char> { 'l', 'r', 'u', 'd', 'n', 'e', 's', 'w' };
+    private HashSet<char> validMove = new HashSet<char> { 'l', 'r', 'u', 'd'};
     private string ValidateMoves(string moves) => new(moves.Where(c => validMove.Contains(Char.ToLower(c))).ToArray());
 
     /// <summary>
@@ -88,29 +90,38 @@ public class Simulation
         Mappables = mappables;
         Positions = positions;
         Moves = ValidateMoves(moves);
+
+        History = new SimulationHistory();  
+
         for (int i = 0; i < mappables.Count; i++)
         {
             Mappables[i].InitMapAndPosition(Map, Positions[i]);
         }
     }
+
     /// <summary>
     /// Makes one move of current mappable in current direction.
     /// Throw error if simulation is finished.
     /// </summary>
     public void Turn()
     {
-
-
         if (Finished)
         {
             throw new InvalidOperationException("Simulation is already finished.");
         }
-
-
         try
         {
             var direction = DirectionParser.Parse(Moves[currentMappableIndex % Moves.Length].ToString())[0];
             CurrentMappable.Go(direction);
+            History.Save(
+            currentMappableIndex,
+            Mappables.ToDictionary(e=> e,e=> e.Position),
+            CurrentMappable,
+            direction
+        );
+
+            currentMappableIndex++;
+            if (currentMappableIndex >= Moves.Length) Finished = true;
         }
         catch (InvalidOperationException ex)
         {
@@ -125,6 +136,4 @@ public class Simulation
 
     }
 }
-
-//
 

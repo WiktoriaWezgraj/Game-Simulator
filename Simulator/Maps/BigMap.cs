@@ -12,7 +12,7 @@ namespace Simulator.Maps
         {
             if (sizeX > 1000 || sizeY > 1000)
             {
-                throw new ArgumentOutOfRangeException(nameof(sizeX), "Width or height exceeds 1000.");
+                throw new ArgumentOutOfRangeException("Map size exceeds allowed dimensions (1000x1000).");
             }
 
             _fields = new Dictionary<Point, List<IMappable>>();
@@ -22,7 +22,7 @@ namespace Simulator.Maps
         {
             if (!Exist(position))
             {
-                return;
+                throw new ArgumentException("Position is outside the map boundaries.");
             }
 
             if (!_fields.ContainsKey(position))
@@ -35,22 +35,16 @@ namespace Simulator.Maps
 
         public override void Remove(IMappable mappable, Point position)
         {
-            if (!Exist(position)) return;
-
-            if (!_fields.ContainsKey(position)) return;
-
-            List<IMappable> creatures = _fields[position];
-
-            if (creatures.Contains(mappable))
+            if (_fields.ContainsKey(position))
             {
-                creatures.Remove(mappable);
-            }
-            else
-            {
-                Console.WriteLine("Obiekt nie istnieje w danym punkcie.");
+                _fields[position].Remove(mappable);
+
+                if (_fields[position].Count == 0)
+                {
+                    _fields.Remove(position);
+                }
             }
         }
-
         public override List<IMappable>? At(int x, int y) => At(new Point(x, y));
 
         public override List<IMappable>? At(Point point)
@@ -62,11 +56,22 @@ namespace Simulator.Maps
         {
             if (!Exist(from) || !Exist(to))
             {
-                return;
+                throw new ArgumentException("One or both positions are outside the map boundaries.");
             }
 
-            Remove(mappable, from);
-            Add(mappable, to);
+            if (_fields.ContainsKey(from) && _fields[from].Remove(mappable))
+            {
+                if (_fields[from].Count == 0)
+                {
+                    _fields.Remove(from);
+                }
+            }
+
+            if (!_fields.ContainsKey(to))
+            {
+                _fields[to] = new List<IMappable>();
+            }
+            _fields[to].Add(mappable);
         }
 
         public override Point Next(Point p, Direction d)

@@ -28,7 +28,7 @@ namespace Simulator.Maps
             new Point(0, 0)
         };
 
-            string moves = "llllluuuuuuuuuuuurd";
+            string moves = "llllluuuuuuuuuuuuuuuuuuurrrrrrrrrrrrrrrrrrrd";
 
             Simulation simulation = new(map, mappables, points, moves);
             MapVisualizer mapVisualizer = new(simulation.Map);
@@ -39,19 +39,26 @@ namespace Simulator.Maps
             Console.WriteLine("Press any key to continue...");
             Console.ReadLine();
 
-            // Symulacja tur
+            var turn = 1;
             while (!simulation.Finished)
             {
+                ConsoleKeyInfo key = Console.ReadKey(intercept: true);
                 Console.WriteLine($"<{simulation.CurrentMappable.GetType().Name} - {simulation.CurrentMappable.Info}> " +
                 $"from {simulation.CurrentMappable.Position} goes {simulation.CurrentMoveName}");
                 simulation.Turn();
                 mapVisualizer.Draw();
                 Console.WriteLine("Press any key to continue...");
-                Console.ReadLine();
+                
+                turn++;
             }
-
             Console.WriteLine("The game is over. You didn’t win, but winning wasn't the goal. It's about enjoying the journey—so have fun!");
+
+            simulation.History.ShowState(5);
+            simulation.History.ShowState(10);
+            simulation.History.ShowState(15);
+            simulation.History.ShowState(20);
         }
     }
-}
 
+
+}

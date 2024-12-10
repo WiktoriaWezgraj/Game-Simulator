@@ -1,15 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
 using Simulator.Maps;
 namespace Simulator;
 
 public abstract class Creature : IMappable
 {
-
     public Map? Map { get; private set; }
     public Point Position { get; private set; }
     private string _name = "Unknown";
     private int _level = 1;
+
     public string Name
     {
         get => _name;
@@ -26,7 +25,6 @@ public abstract class Creature : IMappable
     }
 
     public abstract string Info { get; }
-
     public abstract int Power { get; }
 
     public Creature(string name, int level = 1)
@@ -76,5 +74,18 @@ public abstract class Creature : IMappable
 
         Console.WriteLine($"Moved {direction.ToString().ToLower()} to {Position}.");
     }
+
+    // Implementacja metody SetPosition z interfejsu IMappable
+    public void SetPosition(Point position)
+    {
+        if (Map == null)
+            throw new InvalidOperationException("The creature is not assigned to a map.");
+
+        if (!Map.Exist(position))
+            throw new ArgumentException("The specified position is out of the map bounds.");
+
+        Position = position;
+    }
 }
+
 

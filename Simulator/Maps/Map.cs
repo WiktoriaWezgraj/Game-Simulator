@@ -33,6 +33,7 @@ public abstract class Map
         SizeY = sizeY;
         _map = new Rectangle(0, 0, SizeX - 1, SizeY - 1);
     }
+
     /// <summary>
     /// Check if give point belongs to the map.
     /// </summary>

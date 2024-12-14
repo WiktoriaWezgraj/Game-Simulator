@@ -74,5 +74,6 @@ public abstract class Creature : IMappable
 
         Console.WriteLine($"Moved {direction.ToString().ToLower()} to {Position}.");
     }
+}
 
 

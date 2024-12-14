@@ -2,17 +2,9 @@
 
 namespace Simulator.Maps;
 
-/// <summary>
-/// Map of points.
-/// </summary>
 public abstract class Map
 {
-    public abstract void Add(IMappable mappable, Point position);
-    public abstract void Remove(IMappable mappable, Point position);
-    public abstract void Move(IMappable mappable, Point position, Point position2);
-    public abstract List<IMappable>? At(int x, int y);
-    public abstract List<IMappable>? At(Point point);
-
+    private readonly Dictionary<Point, List<IMappable>> _fields;
     private readonly Rectangle _map;
 
     public int SizeX { get; }
@@ -32,29 +24,66 @@ public abstract class Map
         SizeX = sizeX;
         SizeY = sizeY;
         _map = new Rectangle(0, 0, SizeX - 1, SizeY - 1);
+        _fields = new Dictionary<Point, List<IMappable>>();
     }
 
-    /// <summary>
-    /// Check if give point belongs to the map.
-    /// </summary>
-    /// <param name="p">Point to check.</param>
-    /// <returns></returns>
     public virtual bool Exist(Point p) => _map.Contains(p);
-    /// <summary>
-    /// Next position to the point in a given direction.
-    /// </summary>
-    /// <param name="p">Starting point.</param>
-    /// <param name="d">Direction.</param>
-    /// <returns>Next point.</returns>
-    public abstract Point Next(Point p, Direction d);
-    /// <summary>
-    /// Next diagonal position to the point in a given direction 
-    /// rotated 45 degrees clockwise.
-    /// </summary>
-    /// <param name="p">Starting point.</param>
-    /// <param name="d">Direction.</param>
-    /// <returns>Next point.</returns>
-    public abstract Point NextDiagonal(Point p, Direction d);
 
+    public virtual void Add(IMappable mappable, Point position)
+    {
+        if (!Exist(position))
+            throw new ArgumentException("Position is outside the map boundaries.");
+        if (!_fields.ContainsKey(position))
+            _fields[position] = new List<IMappable>();
+        _fields[position].Add(mappable);
+    }
+
+    public virtual void Remove(IMappable mappable, Point position)
+    {
+        if (_fields.ContainsKey(position))
+        {
+            _fields[position].Remove(mappable);
+            if (_fields[position].Count == 0)
+                _fields.Remove(position);
+        }
+    }
+
+    public virtual List<IMappable>? At(Point point)
+        => _fields.TryGetValue(point, out var mappables) ? mappables : null;
+
+    public virtual List<IMappable>? At(int x, int y) => At(new Point(x, y));
+
+    public virtual Point Next(Point p, Direction d)
+    {
+        return d switch
+        {
+            Direction.Up => new Point(p.X, p.Y + 1),
+            Direction.Down => new Point(p.X, p.Y - 1),
+            Direction.Left => new Point(p.X - 1, p.Y),
+            Direction.Right => new Point(p.X + 1, p.Y),
+            _ => throw new ArgumentOutOfRangeException(nameof(d))
+        };
+    }
+
+    public virtual Point NextDiagonal(Point p, Direction d)
+    {
+        return d switch
+        {
+            Direction.Up => new Point(p.X, p.Y + 1),
+            Direction.Down => new Point(p.X, p.Y - 1),
+            Direction.Left => new Point(p.X - 1, p.Y),
+            Direction.Right => new Point(p.X + 1, p.Y),
+            _ => throw new ArgumentOutOfRangeException(nameof(d))
+        };
+    }
+
+    public virtual void Move(IMappable mappable, Point from, Point to)
+    {
+        if (!Exist(from) || !Exist(to))
+            throw new ArgumentException("One or both positions are outside the map boundaries.");
+
+        Remove(mappable, from);
+        Add(mappable, to);
+    }
 }
 

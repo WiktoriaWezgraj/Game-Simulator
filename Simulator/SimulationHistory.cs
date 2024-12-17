@@ -21,15 +21,8 @@ public class SimulationHistory
     {
         if (turn < 0 || turn >= _history.Count)
         {
-            Console.WriteLine("Invalid turn count.");
-            return;
+            throw new ArgumentException("Invalid turn count.");
         }
-
-        var state = _history[turn];
-        Console.WriteLine($"Turn: {turn}");
-        if (state.CurrentMappable != null && state.CurrentMove.HasValue) Console.WriteLine($"{state.CurrentMappable.ToString()} moved {state.CurrentMove}");
-
-        foreach (var entry in state.Positions) Console.WriteLine($"{entry.Key} is at {entry.Value}");
     }
 
     private class State
@@ -40,4 +33,5 @@ public class SimulationHistory
         public Direction? CurrentMove { get; set; }
     }
 }
+
 

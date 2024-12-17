@@ -60,13 +60,13 @@ public class Simulation
         get
         {
             var direction = DirectionParser.Parse(Moves[currentMappableIndex % Moves.Length].ToString());
-            if (direction.Any()) return direction[0].ToString().ToLower(); 
+            if (direction.Any()) return direction[0].ToString().ToLower();
 
             return string.Empty;
         }
     }
 
-    private HashSet<char> validMove = new HashSet<char> { 'l', 'r', 'u', 'd'};
+    private HashSet<char> validMove = new HashSet<char> { 'l', 'r', 'u', 'd' };
     private string ValidateMoves(string moves) => new(moves.Where(c => validMove.Contains(Char.ToLower(c))).ToArray());
 
     /// <summary>
@@ -91,7 +91,7 @@ public class Simulation
         Positions = positions;
         Moves = ValidateMoves(moves);
 
-        History = new SimulationHistory();  
+        History = new SimulationHistory();
 
         for (int i = 0; i < mappables.Count; i++)
         {
@@ -109,24 +109,19 @@ public class Simulation
         {
             throw new InvalidOperationException("Simulation is already finished.");
         }
-        try
-        {
-            var direction = DirectionParser.Parse(Moves[currentMappableIndex % Moves.Length].ToString())[0];
-            CurrentMappable.Go(direction);
-            History.Save(
-            currentMappableIndex,
-            Mappables.ToDictionary(e=> e,e=> e.Position),
-            CurrentMappable,
-            direction
-        );
 
-            currentMappableIndex++;
-            if (currentMappableIndex >= Moves.Length) Finished = true;
-        }
-        catch (InvalidOperationException ex)
-        {
-            Console.WriteLine($"Illegal move for mappable {CurrentMappable}: {ex.Message}");
-        }
+        var direction = DirectionParser.Parse(Moves[currentMappableIndex % Moves.Length].ToString())[0];
+        CurrentMappable.Go(direction);
+        History.Save(
+        currentMappableIndex,
+        Mappables.ToDictionary(e => e, e => e.Position),
+        CurrentMappable,
+        direction
+    );
+
+        currentMappableIndex++;
+        if (currentMappableIndex >= Moves.Length) Finished = true;
+
         currentMappableIndex++;
 
         if (currentMappableIndex >= Moves.Length)

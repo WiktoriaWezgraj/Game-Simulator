@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Simulator;
 
 namespace Simulator.Maps
 {
@@ -8,57 +9,50 @@ namespace Simulator.Maps
     {
         public static void Main()
         {
-            BigBounceMap map = new BigBounceMap(8, 6);
+            // Tworzenie mapy
+            Map map = new BigBounceMap(8, 6);
 
+            // Lista obiektów poruszających się po mapie
             List<IMappable> mappables = new()
-        {
-            new Elf("Elandor"),
-            new Orc("Gorbag"),
-            new Animals { Description = "Rabbits", Size = 2 },
-            new Birds { Description = "Ostriches", Size = 1, CanFly = false },
-            new Birds { Description = "Eagles", Size = 1, CanFly = true }
-        };
+            {
+                new Elf("Elandor"),
+                new Orc("Gorbag"),
+                new Animals { Description = "Rabbits", Size = 2 },
+                new Birds { Description = "Ostriches", Size = 1, CanFly = false },
+                new Birds { Description = "Eagles", Size = 1, CanFly = true }
+            };
 
-            List<Point> points = new()
-        {
-            new Point(1, 2),
-            new Point(2, 5),
-            new Point(3, 1),
-            new Point(4, 5),
-            new Point(0, 0)
-        };
+            // Początkowe pozycje obiektów
+            List<Point> positions = new()
+            {
+                new Point(1, 2),
+                new Point(2, 5),
+                new Point(3, 1),
+                new Point(4, 5),
+                new Point(0, 0)
+            };
 
-            string moves = "llllluuuuuuuuuuuuuuuuuuurrrrrrrrrrrrrrrrrrrd";
+            // Ciąg ruchów
+            string moves = "llllluuuuuuuurrrrrrrrrrrrrrrrrrrd";
 
-            Simulation simulation = new(map, mappables, points, moves);
-            MapVisualizer mapVisualizer = new(simulation.Map);
+            // Inicjalizacja symulacji i historii
+            Simulation simulation = new(map, mappables, positions, moves);
+            MapVisualizer mapVisualizer = new(map);
 
-            // Wyświetlanie początkowych pozycji
-            Console.WriteLine("Starting Positions: ");
-            mapVisualizer.Draw();
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadLine();
-
-            var turn = 1;
+            Console.WriteLine("Simulation Started!\n");
+            int turn = 0;
             while (!simulation.Finished)
             {
-                ConsoleKeyInfo key = Console.ReadKey(intercept: true);
-                Console.WriteLine($"<{simulation.CurrentMappable.GetType().Name} - {simulation.CurrentMappable.Info}> " +
+                Console.WriteLine($"Turn {turn}:");
+                Console.WriteLine($"{simulation.CurrentMappable.GetType().Name} - {simulation.CurrentMappable.Info} " +
                 $"from {simulation.CurrentMappable.Position} goes {simulation.CurrentMoveName}");
                 simulation.Turn();
                 mapVisualizer.Draw();
-                Console.WriteLine("Press any key to continue...");
-                
                 turn++;
             }
-            Console.WriteLine("The game is over. You didn’t win, but winning wasn't the goal. It's about enjoying the journey—so have fun!");
 
-            simulation.History.ShowState(5);
-            simulation.History.ShowState(10);
-            simulation.History.ShowState(15);
-            simulation.History.ShowState(20);
+            Console.WriteLine("Simulation Finished!");
         }
     }
-
-
 }
+

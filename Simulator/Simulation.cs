@@ -39,8 +39,6 @@ public class Simulation
     /// </summary>
     public bool Finished = false;
 
-    public SimulationHistory History { get; }
-
     /// <summary>
     /// IMappable which will be moving current turn.
     /// </summary>
@@ -91,8 +89,6 @@ public class Simulation
         Positions = positions;
         Moves = ValidateMoves(moves);
 
-        History = new SimulationHistory();
-
         for (int i = 0; i < mappables.Count; i++)
         {
             Mappables[i].InitMapAndPosition(Map, Positions[i]);
@@ -112,23 +108,9 @@ public class Simulation
 
         var direction = DirectionParser.Parse(Moves[currentMappableIndex % Moves.Length].ToString())[0];
         CurrentMappable.Go(direction);
-        History.Save(
-        currentMappableIndex,
-        Mappables.ToDictionary(e => e, e => e.Position),
-        CurrentMappable,
-        direction
-    );
 
         currentMappableIndex++;
         if (currentMappableIndex >= Moves.Length) Finished = true;
-
-        currentMappableIndex++;
-
-        if (currentMappableIndex >= Moves.Length)
-        {
-            Finished = true;
-        }
-
     }
 }
 

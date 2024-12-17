@@ -37,20 +37,13 @@ namespace Simulator.Maps
 
             // Inicjalizacja symulacji i historii
             Simulation simulation = new(map, mappables, positions, moves);
-            MapVisualizer mapVisualizer = new(map);
-
-            Console.WriteLine("Simulation Started!\n");
-            int turn = 0;
-            while (!simulation.Finished)
-            {
-                Console.WriteLine($"Turn {turn}:");
-                Console.WriteLine($"{simulation.CurrentMappable.GetType().Name} - {simulation.CurrentMappable.Info} " +
-                $"from {simulation.CurrentMappable.Position} goes {simulation.CurrentMoveName}");
-                simulation.Turn();
-                mapVisualizer.Draw();
-                turn++;
-            }
-
+            SimulationHistory history = new(simulation);
+            LogVisualizer logVisualizer = new LogVisualizer(history);
+            
+            logVisualizer.Draw(5);
+            logVisualizer.Draw(10);
+            logVisualizer.Draw(15);
+            logVisualizer.Draw(20);
             Console.WriteLine("Simulation Finished!");
         }
     }

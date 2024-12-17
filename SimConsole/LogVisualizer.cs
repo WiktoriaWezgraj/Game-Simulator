@@ -1,49 +1,38 @@
 ﻿using Simulator.Maps;
 using Simulator;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace SimConsole;
+namespace Simulator;
 
-public class MapVisualizer
+public class LogVisualizer
 {
-    private readonly Map _map;
-
-    public MapVisualizer(Map map)
+    SimulationHistory Log { get; }
+    public LogVisualizer(SimulationHistory log)
     {
-        _map = map ?? throw new ArgumentNullException(nameof(map));
+        Log = log ?? throw new ArgumentNullException(nameof(log));
     }
-
-    public void Draw()
+    public void Draw(int turnIndex)
     {
+        var turnLog = Log.TurnLogs[turnIndex];
+
         Console.OutputEncoding = Encoding.UTF8;
 
-        // Top border
         Console.Write(Box.TopLeft);
-        for (int x = 0; x < _map.SizeX - 1; x++)
+        for (int x = 0; x < Log.SizeX - 1; x++)
         {
             Console.Write($"{Box.Horizontal}{Box.TopMid}");
         }
         Console.WriteLine($"{Box.Horizontal}{Box.TopRight}");
-
-        // Map content
-        for (int y = _map.SizeY - 1; y >= 0; y--)
+        for (int y = Log.SizeY - 1; y >= 0; y--)
         {
             Console.Write(Box.Vertical);
-            for (int x = 0; x < _map.SizeX; x++)
+            for (int x = 0; x < Log.SizeX; x++)
             {
-                var creatures = _map.At(x, y);
-                if (creatures != null && creatures.Count > 1)
+                var position = new Point(x, y);
+                if (turnLog.Symbols.ContainsKey(position))
                 {
-                    Console.Write("X"); 
-                }
-                else if (creatures != null && creatures.Count == 1)
-                {
-                    var creature = creatures.First();
-                    Console.Write(creature.Symbol); 
+                    var symbol = turnLog.Symbols[position];
+                    Console.Write(symbol);
                 }
                 else
                 {
@@ -52,25 +41,22 @@ public class MapVisualizer
                 Console.Write(Box.Vertical);
             }
             Console.WriteLine();
-
             if (y > 0)
             {
                 Console.Write(Box.MidLeft);
-                for (int x = 0; x < _map.SizeX - 1; x++)
+                for (int x = 0; x < Log.SizeX - 1; x++)
                 {
                     Console.Write($"{Box.Horizontal}{Box.Cross}");
                 }
                 Console.WriteLine($"{Box.Horizontal}{Box.MidRight}");
             }
         }
-
         Console.Write(Box.BottomLeft);
-        for (int x = 0; x < _map.SizeX - 1; x++)
+        for (int x = 0; x < Log.SizeX - 1; x++)
         {
             Console.Write($"{Box.Horizontal}{Box.BottomMid}");
         }
         Console.WriteLine($"{Box.Horizontal}{Box.BottomRight}");
-
         Console.WriteLine();
     }
 }

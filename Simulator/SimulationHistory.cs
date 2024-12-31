@@ -21,22 +21,37 @@ public class SimulationHistory
 
     private void Run()
     {
-        var map = _simulation.Map;
+
+        TurnLogs.Add(new SimulationTurnLog
+        {
+            Mappable = string.Empty,
+            Move = string.Empty,
+            Symbols = _simulation.Mappables
+            .GroupBy(m => m.Position)
+            .ToDictionary(
+                group => group.Key,
+                group => group.Count() > 1 ? 'X' : group.First().Symbol
+            )
+        });
+
         while (!_simulation.Finished)
         {
             var currentMappable = _simulation.CurrentMappable;
             var move = _simulation.CurrentMoveName;
-            var symbols = _simulation.Mappables.ToDictionary(
-                e => e.Position,
-                e => e.Symbol
-            );
+
+            _simulation.Turn();
+
             TurnLogs.Add(new SimulationTurnLog
             {
                 Mappable = currentMappable.ToString(),
                 Move = move,
-                Symbols = symbols
+                Symbols = _simulation.Mappables
+                            .GroupBy(m => m.Position)
+                            .ToDictionary(
+                                group => group.Key,
+                                group => group.Count() > 1 ? 'X' : group.First().Symbol
+                            )
             });
-            _simulation.Turn();
         }
     }
 }

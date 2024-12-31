@@ -6,7 +6,7 @@ public abstract class Creature : IMappable
 {
     public Map? Map { get; private set; }
     public Point Position { get; private set; }
-    private string _name = "Unknown";
+    private string _name = "Creature";
     private int _level = 1;
 
     public string Name

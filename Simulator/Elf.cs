@@ -19,7 +19,7 @@ public class Elf : Creature
 
     public Elf() : base() { }
 
-    public Elf(string name, int level= 1, int agility = 0) : base(name, level)
+    public Elf(string name, int level= 1, int agility=0) : base(name, level)
     {
         singCount = 0;
         Agility = agility;

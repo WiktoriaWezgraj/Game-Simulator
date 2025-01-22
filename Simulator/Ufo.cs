@@ -39,3 +39,4 @@ public class Ufo : Creature
     }
     public override string Greeting() => $"Hi, I'm {Name}.";
 }
+

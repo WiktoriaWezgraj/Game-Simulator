@@ -15,11 +15,11 @@ namespace Simulator.Maps
             // Lista obiektów poruszających się po mapie
             List<IMappable> mappables = new()
             {
-                new Elf("Elandor"),
-                new Orc("Gorbag"),
-                new Animals { Description = "Rabbits", Size = 2 },
-                new Birds { Description = "Ostriches", Size = 1, CanFly = false },
-                new Birds { Description = "Eagles", Size = 1, CanFly = true }
+                new Player("Astronaut"),
+                new Ufo("Ufo"),
+                new Aliens {Description = "X Æ A-Xii", Size = 1},
+                new FlyingAliens { Description = "Griffin", Size = 1, FastFlying = true },
+                new FlyingAliens { Description = "Vivian", Size = 1, FastFlying = true },
             };
 
             // Początkowe pozycje obiektów
@@ -39,7 +39,7 @@ namespace Simulator.Maps
             Simulation simulation = new(map, mappables, positions, moves);
             SimulationHistory history = new(simulation);
             LogVisualizer logVisualizer = new LogVisualizer(history);
-            
+
             logVisualizer.Draw(5);
             logVisualizer.Draw(10);
             logVisualizer.Draw(15);

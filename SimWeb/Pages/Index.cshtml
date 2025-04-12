@@ -1,6 +1,17 @@
 ﻿@page
 @model IndexModel
-<h1>Aplikacja demonstracyjna Sim Web</h1><br>
-<p>Wizualizacja symulacji z wykorzystaniem programowania obiektowego w C# i Razor Pages.</p><br><br>
-<img src="css/Main.jpg" alt="WoW"/>
 
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+<div class="intro-container">
+    <div class="text-content">
+        <h1>Przygotuj się na inwazję kosmitów!</h1>
+        <h1>W tej symulacji możesz przejąć kontrolę nad kosmitami, którzy odwiedzili ziemię.</h1>
+        <p>Wizualizacja symulacji z wykorzystaniem programowania obiektowego w C# i Razor Pages.</p>
+        <p>Mapa typu bounce.</p>
+        <form asp-page="/Privacy" method="post">
+            <button class="start-button" type="submit" name="turnchange" value="start">Uruchom symulację</button>
+        </form>
+    </div>
+    <img src="~/css/X.png" alt="Alien Invasion" class="intro-image" width="500" height="500" />
+</div>

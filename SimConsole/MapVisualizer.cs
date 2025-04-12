@@ -38,12 +38,12 @@ public class MapVisualizer
                 var creatures = _map.At(x, y);
                 if (creatures != null && creatures.Count > 1)
                 {
-                    Console.Write("X"); 
+                    Console.Write("X");
                 }
                 else if (creatures != null && creatures.Count == 1)
                 {
                     var creature = creatures.First();
-                    Console.Write(creature.Symbol); 
+                    Console.Write(creature.Symbol);
                 }
                 else
                 {

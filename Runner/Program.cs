@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.Intrinsics;
 using System.Text;
+using System.Text.Json;
 
 namespace Simulator;
 
@@ -10,23 +11,14 @@ public class Program
 {
     static void Main(string[] args)
     {
-        List<Creature> creatures = new List<Creature>
-            {
-                new Elf {Name= "Eleandor", Level = 5, Agility = 10},
-                new Orc {Name= "Marcus", Level = 8, Rage = 2 },
-                new Elf {Name= "David", Level = 3, Agility = 8},
-                new Orc {Name= "Marie", Level = 6, Rage = 10 },
-                new Elf {Name= "Arthur", Level = 10, Agility = 5},
-                new Orc {Name= "Wigzo", Level = 7, Rage = 4 }
-            };
+        //domyslnie serializowane sa tylko publiczne property-dlatego przy point json jest pusty
+        Point p1 = new(2, 4);
+        string json = JsonSerializer.Serialize(p1);
+        Console.WriteLine(json); // {}
 
-        creatures.Sort((c1, c2) => c1.Power.CompareTo(c2.Power));
-
-        Console.WriteLine("Lista stworów posortowana według mocy:");
-        foreach (var creature in creatures)
-        {
-            Console.WriteLine(creature);
-        }
+        Point p2 = JsonSerializer.Deserialize<Point>(json);
+        Console.WriteLine(p2);
     }
 }
+
 

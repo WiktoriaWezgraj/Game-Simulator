@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Simulator;
 
-public class Orc : Creature
+public class Ufo : Creature
 {
-    public override char Symbol => 'O';
     public int _rage = 0;
     public int Rage
     {
@@ -12,15 +12,15 @@ public class Orc : Creature
         init => _rage = Validator.Limiter(value, 0, 10);
     }
 
-    public override int Power => 7 * Level + 3 * Rage;
+    public override string Info => $"{Name} [{Level}]";
 
-    public override string Info => $"{Name} [{Level}][{Rage}]";
+    public override char Symbol => 'U';
 
     private int huntCount = 0;
 
-    public Orc() : base() { }
+    public Ufo() : base() { }
 
-    public Orc(string name, int level = 1, int rage = 1)
+    public Ufo(string name, int level = 1, int rage = 1)
         : base(name, level)
     {
         Rage = rage;
@@ -37,8 +37,5 @@ public class Orc : Creature
             huntCount = 0;
         }
     }
-    public override string Greeting() => $"Hi, I'm {Name}, my level is {Level}, my rage is {Rage}.";
+    public override string Greeting() => $"Hi, I'm {Name}.";
 }
-
-    
-

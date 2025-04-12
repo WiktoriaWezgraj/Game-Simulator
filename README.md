@@ -17,6 +17,5 @@ When two or more aliens meet at the same rectangle, they are presented as a grou
 
 When they get to the edge, they reflect the direction for their current move.
 
-![Zrzut ekranu 2025-04-13 002429](https://github.com/user-attachments/assets/ee5edb6a-1204-42e6-91fc-3ebe378da8ea)
 ![Zrzut ekranu 2025-04-13 002419](https://github.com/user-attachments/assets/bb4060d9-86b8-4096-a7c1-f249c736ff83)
-
+![Zrzut ekranu 2025-04-13 002429](https://github.com/user-attachments/assets/ee5edb6a-1204-42e6-91fc-3ebe378da8ea)

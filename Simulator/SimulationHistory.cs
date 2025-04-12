@@ -9,7 +9,7 @@ public class SimulationHistory
     public int SizeX { get; }
     public int SizeY { get; }
     public List<SimulationTurnLog> TurnLogs { get; } = [];
-    // store starting positions at index 0
+    //Store starting positions at index 0
 
     public SimulationHistory(Simulation simulation)
     {

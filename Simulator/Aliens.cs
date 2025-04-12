@@ -13,7 +13,6 @@ public class Aliens : IMappable
         init
         {
             _description = Validator.Shortener(value, 3, 15, '#');
-
         }
     }
 

@@ -7,8 +7,8 @@ namespace SimWeb.Pages
         {
             public class PrivacyModel : PageModel
             {
-                private const int DEFAULT_TURN = 1; // Domyœlna wartoœæ dla Turn
-                private const int MAX_TURN = 20;   // Opcjonalnie: maksymalna liczba tur
+                private const int DEFAULT_TURN = 1; 
+                private const int MAX_TURN = 20;   
 
                 public int Turn { get; private set; }
 

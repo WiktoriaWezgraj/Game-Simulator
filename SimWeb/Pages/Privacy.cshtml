@@ -1,7 +1,7 @@
 ﻿@page
 @model PrivacyModel
 
-<h1>Alien's Attack! Tura: @Model.Turn</h1>
+<h1>Alien Invasion! Turn: @Model.Turn</h1>
 <h1>Info: @Model.Info</h1>
 
 <form asp-page="/Privacy" method="post">
@@ -23,7 +23,3 @@
     @Html.Raw(Model.GridHTML)
 </div>
 
-<form asp-page="/Privacy" method="post">
-    <button type="submit" name="turnchange" value="prev">Poprzednia tura</button>
-    
-</form>

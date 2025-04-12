@@ -12,7 +12,7 @@ namespace SimWeb.Pages
     {
         private static readonly List<char> Moves = new();
 
-        public string Info { get; set; } = "Wprowadź ruch!";
+        public string Info { get; set; } = "Enter a name of your desired move!";
         public int Turn { get; set; }
         public string GridHTML { get; private set; } = "";
 
@@ -20,7 +20,6 @@ namespace SimWeb.Pages
 
         public void OnGet()
         {
-            // Pobierz wartości sesji lub ustaw domyślne, jeśli ich nie ma
             Turn = HttpContext.Session.GetInt32("Turn") ?? 0;
             string storedMoves = HttpContext.Session.GetString("Moves") ?? "";
             Moves.Clear();
@@ -38,10 +37,10 @@ namespace SimWeb.Pages
                 switch (moveDirection)
                 {
                     case "up":
-                        Moves.Add('u');
+                        Moves.Add('d');
                         break;
                     case "down":
-                        Moves.Add('d');
+                        Moves.Add('u');
                         break;
                     case "left":
                         Moves.Add('l');
@@ -49,14 +48,14 @@ namespace SimWeb.Pages
                     case "right":
                         Moves.Add('r');
                         break;
+                //Grid structure requires the directions as they are listed
                 }
             }
 
             HttpContext.Session.SetString("Moves", new string(Moves.ToArray()));
-            Info = $"Wprowadzono ruch: {moveDirection}";
+            Info = $"Entered move name: {moveDirection}";
             SimHistory = GenerateSimulationHistory(new string(Moves.ToArray()));
 
-            // Obsługa zmiany tury
             Turn = HttpContext.Session.GetInt32("Turn") ?? 0;
             string action = Request.Form["turnchange"];
             Turn = action switch
@@ -88,7 +87,6 @@ namespace SimWeb.Pages
                 new FlyingAliens { Description = "Azure", Size = 1, FastFlying = false }
             };
 
-            // Początkowe pozycje obiektów
             List<Point> positions = new()
             {
                 new Point(1, 2),
@@ -103,11 +101,9 @@ namespace SimWeb.Pages
                 new Point(6, 1)
             };
 
-
             Simulation sim = new(map, creatures, positions, moves);
             return new SimulationHistory(sim);
         }
-
 
         public string GenerateGridHTML(SimulationHistory history, int turn)
         {
